@@ -1,9 +1,7 @@
 package me.otho.customItems.configuration;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
+import java.nio.charset.StandardCharsets;
 
 import org.apache.commons.lang3.ArrayUtils;
 
@@ -36,9 +34,8 @@ public class JsonConfigurationHandler {
 
           if (file.isFile() && file.getName().endsWith(".json")) {
             try {
-              reader = new JsonReader(new FileReader(file));
+              reader = new JsonReader(new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8));
               // reader.setLenient(true);
-
               LogHelper.info("Reading json file:" + file.getName(), 1);
 
               JsonSchema data = gson.fromJson(reader, JsonSchema.class);

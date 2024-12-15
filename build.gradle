@@ -1,49 +1,54 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
+        maven { url "https://maven.minecraftforge.net" }
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
+        classpath ('com.anatawa12.forge:ForgeGradle:1.2-1.1.+') {
+            changing = true
+        }
     }
 }
 
 repositories {
     maven {
         name = "chickenbones"
-        url = "http://chickenbones.net/maven/"
+        url = "https://chickenbones.net/maven/"
     }
     maven {
         name = "tterrag"
-        url = "http://maven.tterrag.com/"
+        url = "https://maven.tterrag.com/"
     }
 }
 
 apply plugin: 'forge'
 
-version = "1.0.10_alpha_1.7.10"
+// These settings allow you to choose what version of Java you want to be compatible with. Forge 1.7.10 runs on Java 6 to 8.
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(8)
+    }
+}
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+version = "1.0.10_alpha_1.7.10_forked_fix"
 group= "me.otho.customItems" // http://maven.apache.org/guides/mini/guide-naming-conventions.html
 archivesBaseName = "customitems"
 
 minecraft {
     version = "1.7.10-10.13.4.1492-1.7.10"
-    assetDir = "eclipse/assets"
+    runDir = "run"
 }
 
 dependencies {
-    compile "exnihilo:Ex-Nihilo:1.38-46:deobf"
+    compileOnly "exnihilo:Ex-Nihilo:1.38-46:deobf"
 // http://files.minecraftforge.net/CodeChickenLib/
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev"
+    compileOnly "codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev"
 // http://chickenbones.net/maven
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.3.26:dev"
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.67:dev"
+    compileOnly "codechicken:CodeChickenCore:1.7.10-1.0.3.26:dev"
+    compileOnly "codechicken:NotEnoughItems:1.7.10-1.0.3.67:dev"
 }
 
 processResources
@@ -64,6 +69,7 @@ processResources
     from(sourceSets.main.resources.srcDirs) {
         exclude 'mcmod.info'
     }
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
 }
 
 
