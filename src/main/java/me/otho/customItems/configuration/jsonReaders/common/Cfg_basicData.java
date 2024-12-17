@@ -27,4 +27,15 @@ public class Cfg_basicData {
    * registered. This should order items in creativetabs and NEI
    */
   public Integer registerOrder = 0;
+
+  @Override
+  public String toString() {
+    return "Cfg_basicData{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", textureName='" + textureName + '\'' +
+            ", creativeTab='" + creativeTab + '\'' +
+            ", registerOrder=" + registerOrder +
+            '}';
+  }
 }

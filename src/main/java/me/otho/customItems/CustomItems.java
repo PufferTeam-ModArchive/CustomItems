@@ -27,7 +27,7 @@ public class CustomItems {
   public static final String MOD_ID = "customitems";
   public static final String MOD_NAME = "Meta Mod: Custom Items (Forked)";
   public static final String DEPENDENCIES = "";
-  public static final String VERSION = "1.0.10_alpha_1.7.10_forked_fix";
+  public static final String VERSION = "1.0.11_alpha_1.7.10_forked_fix";
 
   public static final String CLIENT_PROXY_CLASS = "me.otho.customItems.proxy.ClientProxy";
   public static final String SERVER_PROXY_CLASS = "me.otho.customItems.proxy.ServerProxy";
@@ -49,7 +49,7 @@ public class CustomItems {
     modConfigDirectory = event.getModConfigurationDirectory();
     minecraftFolder = modConfigDirectory.getParentFile();
 
-    String configFolderPath = modConfigDirectory.toString() + File.separator + CustomItems.MOD_ID + File.separator;
+    String configFolderPath = modConfigDirectory + File.separator + CustomItems.MOD_ID + File.separator;
 
     ForgeConfig.init(event.getSuggestedConfigurationFile());
 
@@ -61,7 +61,7 @@ public class CustomItems {
 
     customItemsTab.init();
 
-    JsonConfigurationHandler.init(configFolderPath, event.getSourceFile());
+    JsonConfigurationHandler.init(configFolderPath);
 
     GameRegistry.registerWorldGenerator(new CustomWorldGenerator(), 1);
 
