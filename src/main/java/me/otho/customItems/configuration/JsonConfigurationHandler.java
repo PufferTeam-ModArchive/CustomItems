@@ -4,20 +4,19 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 
-import com.google.gson.GsonBuilder;
 import org.apache.commons.lang3.ArrayUtils;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.stream.JsonReader;
 
 import me.otho.customItems.registry.Registry;
 import me.otho.customItems.utility.LogHelper;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 public class JsonConfigurationHandler {
 
-    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping().create();
+    private static final Gson GSON = new GsonBuilder().disableHtmlEscaping()
+        .create();
     public static JsonSchema data;
     public static JsonSchema allData;
 
@@ -38,9 +37,11 @@ public class JsonConfigurationHandler {
                     for (i = 0; i < listOfFiles.length; i++) {
                         File file = listOfFiles[i];
 
-                        if (file.isFile() && file.getName().endsWith(".json")) {
+                        if (file.isFile() && file.getName()
+                            .endsWith(".json")) {
                             try {
-                                reader = new JsonReader(new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
+                                reader = new JsonReader(
+                                    new InputStreamReader(Files.newInputStream(file.toPath()), StandardCharsets.UTF_8));
                                 LogHelper.info("Reading json file: " + file.getName(), 1);
                                 JsonSchema data = GSON.fromJson(reader, JsonSchema.class);
                                 mergeGson(data, allData);

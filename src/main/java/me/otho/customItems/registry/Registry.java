@@ -1,5 +1,13 @@
 package me.otho.customItems.registry;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Comparator;
+
+import net.minecraft.block.Block;
+import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
+
 import me.otho.customItems.CustomItems;
 import me.otho.customItems.configuration.JsonSchema;
 import me.otho.customItems.configuration.jsonReaders.blocks.Cfg_block;
@@ -16,13 +24,6 @@ import me.otho.customItems.configuration.jsonReaders.items.tools.*;
 import me.otho.customItems.configuration.jsonReaders.tileEntity.Cfg_chest;
 import me.otho.customItems.mod.creativeTab.customItemsTab;
 import me.otho.customItems.utility.LogHelper;
-import net.minecraft.block.Block;
-import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
 
 public class Registry {
 
@@ -84,9 +85,11 @@ public class Registry {
             if (data.axes != null) {
                 mergeArrays(allData, data.axes);
             }
-            /*if (data.hammers != null) {
-                mergeArrays(allData, data.hammers);
-            }*/
+            /*
+             * if (data.hammers != null) {
+             * mergeArrays(allData, data.hammers);
+             * }
+             */
             if (data.shovels != null) {
                 mergeArrays(allData, data.shovels);
             }
@@ -136,9 +139,11 @@ public class Registry {
                         ItemRegistry.registerPickaxe((Cfg_pickaxe) toRegister);
                     } else if (toRegister instanceof Cfg_axe) {
                         ItemRegistry.registerAxe((Cfg_axe) toRegister);
-                    }/* else if (toRegister instanceof Cfg_hammer) {
-                        ItemRegistry.registerHammer((Cfg_hammer) toRegister);
-                    }*/ else if (toRegister instanceof Cfg_shovel) {
+                    } /*
+                       * else if (toRegister instanceof Cfg_hammer) {
+                       * ItemRegistry.registerHammer((Cfg_hammer) toRegister);
+                       * }
+                       */ else if (toRegister instanceof Cfg_shovel) {
                         ItemRegistry.registerShovel((Cfg_shovel) toRegister);
                     } else if (toRegister instanceof Cfg_hoe) {
                         ItemRegistry.registerHoe((Cfg_hoe) toRegister);

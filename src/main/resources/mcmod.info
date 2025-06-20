@@ -1,9 +1,9 @@
 [
     {
-      "modid": "customitems",
-      "name": "Meta Mod: Custom Items (Forked)",
+      "modid": "${modId}",
+      "name": "${modName}",
       "description": "A simple way to add your custom stuff to minecraft.",
-      "version": "1.0.11_alpha_1.7.10_forked_fix",
+      "version": "${modVersion}",
       "mcversion": "1.7.10",
       "url": "https://github.com/0tho/CustomItems",
       "updateUrl": "",

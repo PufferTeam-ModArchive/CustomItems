@@ -2,13 +2,15 @@ package me.otho.customItems.mod.creativeTab;
 
 import java.util.ArrayList;
 
-import me.otho.customItems.CustomItems;
-import me.otho.customItems.configuration.ForgeConfig;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 
+import me.otho.customItems.CustomItems;
+import me.otho.customItems.configuration.ForgeConfig;
+
 public class customItemsTab extends CreativeTabs {
+
     public Item iconItem;
     public String labelName;
     private static int tabId = 0;
@@ -62,6 +64,7 @@ public class customItemsTab extends CreativeTabs {
         }
         return null;
     }
+
     public static CreativeTabs getTabByNameOrDefault(String label) {
         int i;
         for (i = 0; i < customTabs.size(); i++) {

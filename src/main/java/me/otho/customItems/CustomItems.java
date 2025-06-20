@@ -3,6 +3,8 @@ package me.otho.customItems;
 import java.io.File;
 import java.io.IOException;
 
+import net.minecraftforge.common.MinecraftForge;
+
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.SidedProxy;
@@ -19,67 +21,71 @@ import me.otho.customItems.mod.worldGen.CustomWorldGenerator;
 import me.otho.customItems.proxy.IProxy;
 import me.otho.customItems.utility.IdDumper;
 import me.otho.customItems.utility.LogHelper;
-import net.minecraftforge.common.MinecraftForge;
 
-@Mod(dependencies = CustomItems.DEPENDENCIES, modid = CustomItems.MOD_ID, version = CustomItems.VERSION, name = CustomItems.MOD_NAME)
+@Mod(
+    dependencies = CustomItems.DEPENDENCIES,
+    modid = CustomItems.MOD_ID,
+    version = CustomItems.VERSION,
+    name = CustomItems.MOD_NAME)
 public class CustomItems {
-  // Mod info
-  public static final String MOD_ID = "customitems";
-  public static final String MOD_NAME = "Meta Mod: Custom Items (Forked)";
-  public static final String DEPENDENCIES = "";
-  public static final String VERSION = "1.0.11_alpha_1.7.10_forked_fix";
 
-  public static final String CLIENT_PROXY_CLASS = "me.otho.customItems.proxy.ClientProxy";
-  public static final String SERVER_PROXY_CLASS = "me.otho.customItems.proxy.ServerProxy";
-  public static final String LOG_FILE_NAME = "MM-CI_log.log";
-  public static final String ID_FILE_NAME = "MM-CI_id.log";
+    // Mod info
+    public static final String MOD_ID = "customitems";
+    public static final String MOD_NAME = "Meta Mod";
+    public static final String DEPENDENCIES = "";
+    public static final String VERSION = Tags.VERSION;
 
-  private static File modConfigDirectory;
-  private static File minecraftFolder;
+    public static final String CLIENT_PROXY_CLASS = "me.otho.customItems.proxy.ClientProxy";
+    public static final String SERVER_PROXY_CLASS = "me.otho.customItems.proxy.ServerProxy";
+    public static final String LOG_FILE_NAME = "MM-CI_log.log";
+    public static final String ID_FILE_NAME = "MM-CI_id.log";
 
-  @Instance(CustomItems.MOD_ID)
-  public static CustomItems instance;
+    private static File modConfigDirectory;
+    private static File minecraftFolder;
 
-  @SidedProxy(clientSide = CustomItems.CLIENT_PROXY_CLASS, serverSide = CustomItems.SERVER_PROXY_CLASS)
-  public static IProxy proxy;
+    @Instance(CustomItems.MOD_ID)
+    public static CustomItems instance;
 
-  @Mod.EventHandler
-  public void preInit(FMLPreInitializationEvent event) throws IOException {
+    @SidedProxy(clientSide = CustomItems.CLIENT_PROXY_CLASS, serverSide = CustomItems.SERVER_PROXY_CLASS)
+    public static IProxy proxy;
 
-    modConfigDirectory = event.getModConfigurationDirectory();
-    minecraftFolder = modConfigDirectory.getParentFile();
+    @Mod.EventHandler
+    public void preInit(FMLPreInitializationEvent event) throws IOException {
 
-    String configFolderPath = modConfigDirectory + File.separator + CustomItems.MOD_ID + File.separator;
+        modConfigDirectory = event.getModConfigurationDirectory();
+        minecraftFolder = modConfigDirectory.getParentFile();
 
-    ForgeConfig.init(event.getSuggestedConfigurationFile());
+        String configFolderPath = modConfigDirectory + File.separator + CustomItems.MOD_ID + File.separator;
 
-    if (ForgeConfig.logFile) {
-      LogHelper.openLog(minecraftFolder);
+        ForgeConfig.init(event.getSuggestedConfigurationFile());
+
+        if (ForgeConfig.logFile) {
+            LogHelper.openLog(minecraftFolder);
+        }
+
+        Integration.init();
+
+        customItemsTab.init();
+
+        JsonConfigurationHandler.init(configFolderPath);
+
+        GameRegistry.registerWorldGenerator(new CustomWorldGenerator(), 1);
+
+        proxy.registerTileEntities();
+        proxy.Integration_NEI();
+
+        MinecraftForge.EVENT_BUS.register(new EntityDropHandler());
+        MinecraftForge.EVENT_BUS.register(new BlockDropHandler());
     }
 
-    Integration.init();
+    @Mod.EventHandler
+    public void postInit(FMLPostInitializationEvent event) throws IOException {
+        JsonConfigurationHandler.post_init();
 
-    customItemsTab.init();
+        if (ForgeConfig.idFile) {
+            IdDumper.writeIdFile(minecraftFolder);
+        }
 
-    JsonConfigurationHandler.init(configFolderPath);
-
-    GameRegistry.registerWorldGenerator(new CustomWorldGenerator(), 1);
-
-    proxy.registerTileEntities();
-    proxy.Integration_NEI();
-
-    MinecraftForge.EVENT_BUS.register(new EntityDropHandler());
-    MinecraftForge.EVENT_BUS.register(new BlockDropHandler());
-  }
-
-  @Mod.EventHandler
-  public void postInit(FMLPostInitializationEvent event) throws IOException {
-    JsonConfigurationHandler.post_init();
-    
-    if (ForgeConfig.idFile) {
-    	IdDumper.writeIdFile(minecraftFolder);
+        LogHelper.info("End of customization");
     }
-
-    LogHelper.info("End of customization");
-  }
 }
