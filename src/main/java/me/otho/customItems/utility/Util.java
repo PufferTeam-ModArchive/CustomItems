@@ -2,7 +2,6 @@ package me.otho.customItems.utility;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.Block.SoundType;
-import net.minecraft.util.EnumChatFormatting;
 
 public class Util {
 
@@ -128,7 +127,6 @@ public class Util {
 
     public static String parseRegisterName(String name) {
         name = name.replaceAll("\\s+", "_");
-        name = EnumChatFormatting.getTextWithoutFormattingCodes(name);
         name = name.toLowerCase();
         return name;
     }
